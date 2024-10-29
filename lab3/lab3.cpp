@@ -110,13 +110,20 @@ int sclass(char c) {
             }
             return 9;
         }
-        case ';': case '\0':
+        case ';': case '\0': {
+            if (!brackets.empty()) {
+                return 0;
+            }
+            while (!brackets.empty()) {
+                brackets.pop();
+            }
             return 10;
+        }
         default:
             if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
                 return 1;
             }
-            return 0; // ??????
+            return 0; 
     }
 }
 
