@@ -20,10 +20,8 @@ struct Node {
 
 void printTree(Node* root, int level = 0);
 
-std::vector<std::string> tokenize(const std::string& expr);
+void tokenize(const char& expr);
 
 int precedence(const std::string& op);
 
 Node* parseExpression(const std::vector<std::string>& tokens);
-
-void drawTree(std::string expression);

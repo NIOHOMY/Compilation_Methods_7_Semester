@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "SyntaxAnalysis.h"
 
-
+static std::vector<std::string> tokens;
+static std::string token;
 
 void printTree(Node* root, int level) {
     if (!root) return;
@@ -11,23 +12,22 @@ void printTree(Node* root, int level) {
     }
 }
 
-std::vector<std::string> tokenize(const std::string& expr) {
-    std::vector<std::string> tokens;
-    std::string token;
+void tokenize(const char& c) {
+    if (c == ';') {
+        Node* root = parseExpression(tokens);
 
-    for (size_t i = 0; i < expr.size(); i++) {
-        char c = expr[i];
+        printTree(root);
 
+        delete root;
+        tokens.clear();
+        token.clear();
+    } else {
         if (std::isspace(c)) {
             if (!token.empty()) {
                 tokens.push_back(token);
                 token.clear();
             }
-            continue;
-        }
-
-        // числа E название
-        if (std::isdigit(c) || c == '.' || c == 'E' || c == '+' || c == '-' || std::isalpha(c)) {
+        } else if (std::isdigit(c) || c == '.' || c == 'E' || c == '+' || c == '-' || std::isalpha(c)) { // числа E название
             token += c;
         }
         else if (c == '(' || c == ')' || c == '+' || c == '-' || c == '*' || c == '/') {
@@ -49,11 +49,6 @@ std::vector<std::string> tokenize(const std::string& expr) {
             token.clear();
         }
     }
-    if (!token.empty()) {
-        tokens.push_back(token);
-    }
-
-    return tokens;
 }
 
 int precedence(const std::string& op) {
@@ -143,19 +138,4 @@ Node* parseExpression(const std::vector<std::string>& tokens) {
     }
 
     return nullptr;
-}
-
-void drawTree(std::string expression) {
-    std::stringstream ss(expression);
-    std::string line;
-
-    while (std::getline(ss, line, ';')) {
-        std::vector<std::string> tokens = tokenize(line);
-
-        Node* root = parseExpression(tokens);
-
-        printTree(root);
-
-        delete root;
-    }
 }

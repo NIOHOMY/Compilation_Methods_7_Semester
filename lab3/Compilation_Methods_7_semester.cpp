@@ -14,7 +14,6 @@
 
 char S[100];
 std::stack<char> brackets;
-std::string expression;
 int i;
 int ST;
 int CL;
@@ -102,8 +101,6 @@ void lexfile() {
         if ((ST == 0) && (S[i] == '\0')) {
             if (fgets(S, 100, inp) == NULL) {
                 printf("The end\n");
-                std::cout << "Parse Tree:" << std::endl;
-                drawTree(expression);
                 return;
             }
             i = 0;
@@ -114,6 +111,7 @@ void lexfile() {
         printf("%c[%d->", S[i], ST);
         ST = D[ST][CL];
         printf("%d]\n", ST);
+        tokenize(S[i]);
 
         i++;
 
@@ -129,7 +127,6 @@ void lexfile() {
             for (j = FIX; j < i; j++)
                 putchar(S[j]);
             puts("");
-            expression = std::string(S + FIX, i - FIX);
             ST = 0;
             S[0] = '\0';
             i = 0;
