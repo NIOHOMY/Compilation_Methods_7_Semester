@@ -33,3 +33,5 @@ https://www.onlinegdb.com/online_c++_compiler#
 с++ - простой вариант
 
 python - сложный вариант
+
+[документация 3 лабы](https://github.com/NIOHOMY/Compilation_Methods_7_Semester/blob/main/lab3/%D0%9C%D0%9A_3.pdf)
